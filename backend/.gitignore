@@ -1,0 +1,26 @@
+# Dependencies
+node_modules/
+
+# Environment files
+.env
+.env.local
+.env.production
+
+# AWS SAM Build
+.aws-sam/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Test output
+coverage/
+response.json
+output.json
+test-event.json
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo

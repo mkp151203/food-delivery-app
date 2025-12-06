@@ -1,0 +1,124 @@
+.my-orders-page {
+    min-height: 100vh;
+    padding: 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.orders-loading,
+.orders-empty {
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--text-muted);
+}
+
+.orders-empty svg {
+    color: var(--border-default);
+    margin-bottom: 1.5rem;
+}
+
+.orders-empty h2 {
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    font-family: var(--font-display);
+}
+
+.orders-empty p {
+    margin-bottom: 1.5rem;
+}
+
+.browse-btn {
+    background: var(--primary);
+    color: white;
+    text-decoration: none;
+    padding: 0.75rem 2rem;
+    border-radius: var(--radius-full);
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.browse-btn:hover {
+    background: var(--primary-dark);
+}
+
+.my-orders-page h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 2rem;
+    font-family: var(--font-display);
+}
+
+.orders-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.order-card {
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem;
+    text-decoration: none;
+    transition: var(--transition);
+    border: 1px solid var(--border-default);
+}
+
+.order-card:hover {
+    border-color: var(--primary);
+    transform: translateX(5px);
+}
+
+.order-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+.order-id {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+}
+
+.order-status {
+    font-weight: 600;
+    font-size: 0.875rem;
+    text-transform: capitalize;
+}
+
+.order-card-body h3 {
+    color: var(--text-primary);
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
+    font-family: var(--font-display);
+}
+
+.order-card-body p {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+}
+
+.order-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border-default);
+}
+
+.order-date {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+}
+
+.order-amount {
+    color: var(--success);
+    font-weight: 700;
+    font-family: var(--font-display);
+}

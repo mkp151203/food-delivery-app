@@ -1,0 +1,201 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Food Delivery Backend API
+
+Globals:
+  Function:
+    Timeout: 30
+    Runtime: nodejs18.x
+    MemorySize: 128
+    Environment:
+      Variables:
+        AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1'
+        RESTAURANTS_TABLE: FoodDelivery-Restaurants
+        MENU_TABLE: FoodDelivery-MenuItems
+        ORDERS_TABLE: FoodDelivery-Orders
+        USERS_TABLE: FoodDelivery-Users
+
+Resources:
+  # API Gateway
+  FoodDeliveryApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: prod
+      Cors:
+        AllowMethods: "'GET,POST,PUT,DELETE,OPTIONS'"
+        AllowHeaders: "'Content-Type,Authorization,X-User-Id'"
+        AllowOrigin: "'*'"
+
+  # Restaurant Functions
+  RestaurantsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ./
+      Handler: src/handlers/restaurants.handler
+      Events:
+        GetAll:
+          Type: Api
+          Properties:
+            RestApiId: !Ref FoodDeliveryApi
+            Path: /restaurants
+            Method: get
+        GetOne:
+          Type: Api
+          Properties:
+            RestApiId: !Ref FoodDeliveryApi
+            Path: /restaurants/{id}
+            Method: get
+        Create:
+          Type: Api
+          Properties:
+            RestApiId: !Ref FoodDeliveryApi
+            Path: /restaurants
+            Method: post
+        Update:
+          Type: Api
+          Properties:
+            RestApiId: !Ref FoodDeliveryApi
+            Path: /restaurants/{id}
+            Method: put
+        Delete:
+          Type: Api
+          Properties:
+            RestApiId: !Ref FoodDeliveryApi
+            Path: /restaurants/{id}
+            Method: delete
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: FoodDelivery-Restaurants
+        - Statement:
+            - Effect: Allow
+              Action:
+                - dynamodb:*
+              Resource: !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/FoodDelivery-*"
+
+  # Menu Functions
+  MenuFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ./
+      Handler: src/handlers/menu.handler
+      Events:
+        GetByRestaurant:
+          Type: Api
+          Properties:
+            RestApiId: !Ref FoodDeliveryApi
+            Path: /menu/restaurant/{id}
+            Method: get
+        Create:
+          Type: Api
+          Properties:
+            RestApiId: !Ref FoodDeliveryApi
+            Path: /menu
+            Method: post
+        Update:
+          Type: Api
+          Properties:
+            RestApiId: !Ref FoodDeliveryApi
+            Path: /menu/item/{id}
+            Method: put
+        Delete:
+          Type: Api
+          Properties:
+            RestApiId: !Ref FoodDeliveryApi
+            Path: /menu/item/{id}
+            Method: delete
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: FoodDelivery-MenuItems
+
+  # Order Functions
+  OrdersFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ./
+      Handler: src/handlers/orders.handler
+      Events:
+        Create:
+          Type: Api
+          Properties:
+            RestApiId: !Ref FoodDeliveryApi
+            Path: /orders
+            Method: post
+        GetOne:
+          Type: Api
+          Properties:
+            RestApiId: !Ref FoodDeliveryApi
+            Path: /orders/{orderId}
+            Method: get
+        GetByUser:
+          Type: Api
+          Properties:
+            RestApiId: !Ref FoodDeliveryApi
+            Path: /orders/user/{userId}
+            Method: get
+        UpdateStatus:
+          Type: Api
+          Properties:
+            RestApiId: !Ref FoodDeliveryApi
+            Path: /orders/{orderId}/status
+            Method: put
+        GetAll:
+          Type: Api
+          Properties:
+            RestApiId: !Ref FoodDeliveryApi
+            Path: /admin/orders
+            Method: get
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: FoodDelivery-Orders
+
+  # User Functions
+  UsersFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ./
+      Handler: src/handlers/users.handler
+      Events:
+        Register:
+          Type: Api
+          Properties:
+            RestApiId: !Ref FoodDeliveryApi
+            Path: /users/register
+            Method: post
+        Login:
+          Type: Api
+          Properties:
+            RestApiId: !Ref FoodDeliveryApi
+            Path: /users/login
+            Method: post
+        GetOne:
+          Type: Api
+          Properties:
+            RestApiId: !Ref FoodDeliveryApi
+            Path: /users/{id}
+            Method: get
+        Update:
+          Type: Api
+          Properties:
+            RestApiId: !Ref FoodDeliveryApi
+            Path: /users/{id}
+            Method: put
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: FoodDelivery-Users
+
+Outputs:
+  ApiEndpoint:
+    Description: API Gateway endpoint URL
+    Value: !Sub "https://${FoodDeliveryApi}.execute-api.${AWS::Region}.amazonaws.com/prod"
+  RestaurantsFunctionArn:
+    Description: Restaurants Lambda Function ARN
+    Value: !GetAtt RestaurantsFunction.Arn
+  MenuFunctionArn:
+    Description: Menu Lambda Function ARN
+    Value: !GetAtt MenuFunction.Arn
+  OrdersFunctionArn:
+    Description: Orders Lambda Function ARN
+    Value: !GetAtt OrdersFunction.Arn
+  UsersFunctionArn:
+    Description: Users Lambda Function ARN
+    Value: !GetAtt UsersFunction.Arn

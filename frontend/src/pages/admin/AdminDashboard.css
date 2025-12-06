@@ -1,0 +1,226 @@
+.admin-dashboard {
+    min-height: 100vh;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.admin-loading {
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.admin-header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+}
+
+.refresh-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border-default);
+    color: var(--text-primary);
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-md);
+    transition: var(--transition);
+}
+
+.refresh-btn:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    border: 1px solid var(--border-default);
+}
+
+.stat-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.stat-icon.restaurants {
+    background: var(--primary);
+    color: white;
+}
+
+.stat-icon.orders {
+    background: var(--success);
+    color: white;
+}
+
+.stat-icon.pending {
+    background: var(--yellow);
+    color: var(--bg-dark);
+}
+
+.stat-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+}
+
+.stat-label {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+}
+
+.quick-actions {
+    margin-bottom: 2rem;
+}
+
+.quick-actions h2,
+.recent-orders h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    font-family: var(--font-display);
+}
+
+.actions-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+.action-card {
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--text-primary);
+    transition: var(--transition);
+    border: 1px solid var(--border-default);
+    font-family: var(--font-display);
+}
+
+.action-card:hover {
+    border-color: var(--primary);
+    transform: translateY(-3px);
+}
+
+.action-card svg {
+    color: var(--primary);
+}
+
+.recent-orders {
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    border: 1px solid var(--border-default);
+}
+
+.no-orders {
+    color: var(--text-secondary);
+    text-align: center;
+    padding: 2rem;
+}
+
+.orders-table {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.order-row {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr 1fr;
+    padding: 1rem;
+    background: var(--bg-card-light);
+    border-radius: var(--radius-md);
+    align-items: center;
+    border: 1px solid var(--border-default);
+}
+
+.order-id {
+    color: var(--text-secondary);
+}
+
+.order-restaurant {
+    color: var(--text-primary);
+}
+
+.order-status {
+    text-transform: capitalize;
+    font-weight: 500;
+}
+
+.order-status.placed {
+    color: var(--blue);
+}
+
+.order-status.preparing {
+    color: var(--yellow);
+}
+
+.order-status.out-for-delivery {
+    color: var(--orange);
+}
+
+.order-status.delivered {
+    color: var(--success);
+}
+
+.order-status.cancelled {
+    color: var(--danger);
+}
+
+.order-amount {
+    color: var(--success);
+    text-align: right;
+    font-family: var(--font-display);
+}
+
+@media (max-width: 768px) {
+
+    .stats-grid,
+    .actions-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .order-row {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.5rem;
+    }
+}
