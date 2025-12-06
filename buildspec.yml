@@ -1,0 +1,24 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 18
+    commands:
+      - cd frontend
+      - npm ci
+  build:
+    commands:
+      - echo "Building frontend..."
+      - npm run build
+  post_build:
+    commands:
+      - echo "Deploying to S3..."
+      - aws s3 sync dist/ s3://food-delivery-frontend-998718206191 --delete
+      - echo "Invalidating CloudFront cache..."
+      - aws cloudfront create-invalidation --distribution-id E1KUNR5WQZIZM9 --paths "/*"
+
+artifacts:
+  files:
+    - frontend/dist/**/*
+  discard-paths: no
