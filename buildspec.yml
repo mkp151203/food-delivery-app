@@ -13,7 +13,7 @@ phases:
       - npm ci
   build:
     commands:
-      - echo "Building frontend with API URL: $VITE_API_URL"
+      - echo "Building frontend with API URL $VITE_API_URL"
       - npm run build
   post_build:
     commands:
