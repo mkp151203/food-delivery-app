@@ -1,15 +1,19 @@
 version: 0.2
 
+env:
+  variables:
+    VITE_API_URL: "https://gf3w1gt2sf.execute-api.us-east-1.amazonaws.com/prod"
+
 phases:
   install:
     runtime-versions:
-      nodejs: 18
+      nodejs: 20
     commands:
       - cd frontend
       - npm ci
   build:
     commands:
-      - echo "Building frontend..."
+      - echo "Building frontend with API URL: $VITE_API_URL"
       - npm run build
   post_build:
     commands:
